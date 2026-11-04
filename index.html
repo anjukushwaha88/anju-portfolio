@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anju Kushwaha | Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0b17;--card:rgba(255,255,255,.06);--line:rgba(255,255,255,.12);--text:#eef0ff;--muted:#a3a7c7;--a1:#a855f7;--a2:#ec4899;--grad:linear-gradient(135deg,var(--a1),var(--a2))}
+[data-theme=light]{--bg:#faf7ff;--card:rgba(255,255,255,.8);--line:rgba(80,40,140,.15);--text:#1d1536;--muted:#5d5880}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Poppins,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden;transition:background .3s}
+body::before,body::after{content:"";position:fixed;width:420px;height:420px;border-radius:50%;filter:blur(120px);opacity:.28;z-index:-1}
+body::before{background:var(--a1);top:-120px;left:-120px}
+body::after{background:var(--a2);bottom:-120px;right:-120px}
+section{max-width:1050px;margin:auto;padding:90px 22px 30px}
+h2{font-size:2rem;margin-bottom:34px}
+h2 span,.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+nav{position:fixed;top:0;width:100%;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:14px 5%;backdrop-filter:blur(14px);background:var(--card);border-bottom:1px solid var(--line)}
+.logo{font-weight:700;font-size:1.3rem}
+nav ul{display:flex;gap:22px;list-style:none;align-items:center}
+nav a{color:var(--muted);text-decoration:none;font-size:.92rem;transition:.2s}
+nav a:hover{color:var(--a2)}
+.tog{background:var(--card);border:1px solid var(--line);color:var(--text);border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:1rem}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap-reverse}
+.hero h1{font-size:clamp(2.2rem,6vw,3.6rem);line-height:1.15}
+.role{font-size:1.4rem;margin:10px 0;min-height:2.2rem;font-weight:500}
+.cursor{border-right:3px solid var(--a2);margin-left:2px;animation:blink 1s infinite}
+@keyframes blink{50%{border-color:transparent}}
+.hero p{color:var(--muted);max-width:520px}
+.btns{display:flex;gap:14px;margin-top:26px;flex-wrap:wrap}
+.btn{padding:12px 26px;border-radius:50px;text-decoration:none;font-weight:600;border:1px solid var(--line);color:var(--text);transition:.25s}
+.btn.main{background:var(--grad);border:none;color:#fff;box-shadow:0 8px 26px rgba(168,85,247,.4)}
+.btn:hover{transform:translateY(-4px)}
+.avatar{width:290px;height:290px;border-radius:50%;padding:6px;background:var(--grad);animation:float 4s ease-in-out infinite;flex-shrink:0}
+.avatar>*{width:100%;height:100%;border-radius:50%;object-fit:cover;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:6rem;font-weight:700}
+@keyframes float{50%{transform:translateY(-14px)}}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px;backdrop-filter:blur(10px);transition:.3s}
+.card:hover{transform:translateY(-6px);border-color:var(--a1)}
+.card h3{margin-bottom:6px;font-size:1.1rem}
+.card p,.muted{color:var(--muted);font-size:.93rem}
+.tag{display:inline-block;font-size:.75rem;padding:2px 12px;border-radius:20px;background:var(--grad);color:#fff;margin:10px 6px 0 0}
+.bar{height:9px;background:var(--line);border-radius:10px;margin:6px 0 18px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--grad);border-radius:10px;transition:width 1.4s ease}
+.row{display:flex;justify-content:space-between;font-size:.92rem}
+.reveal{opacity:0;transform:translateY(40px);transition:.8s}
+.reveal.show{opacity:1;transform:none}
+.stats{display:flex;gap:20px;flex-wrap:wrap;margin-top:20px}
+.stats div{flex:1;min-width:130px;text-align:center}
+.stats b{font-size:1.7rem;display:block}
+footer{text-align:center;padding:50px 20px 30px;color:var(--muted);font-size:.88rem}
+@media(max-width:700px){nav ul li:not(:last-child){display:none}.avatar{width:220px;height:220px}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+ 
+const PHOTO = "./anju.jpg";
+
+const INFO = {
+  name: "Anju Kushwaha",
+  roles: ["Aspiring Software Engineer", "B.Tech CSE Student", "C++ Learner", "Future Web Developer"],
+  tagline: "Second-year Computer Science student who loves turning ideas into clean code. Currently learning C++ and web development, and building projects to become a software engineer.",
+  email: "anjukushwaha998877@gmail.com",
+  linkedin: "https://linkedin.com/in/anju-kushwaha-6153",
+  github: "https://github.com/anjukushwaha88",
+};
+
+const SKILLS = [["C++", 70], ["C", 70], ["HTML", 65], ["OOPs", 60], ["CSS & JavaScript (learning)", 35], ["React (learning)", 25]];
+
+const PROJECTS = [
+  { t: "College Notes Manager", d: "Console app in C++ to add, search, edit and delete subject-wise notes, saved in files.", s: ["C++", "File Handling", "OOPs"], status: "In progress" },
+  { t: "Personal Portfolio", d: "This responsive portfolio with dark/light mode and animations.", s: ["React", "CSS", "JavaScript"], status: "Live" },
+  { t: "To-Do List App", d: "Add, complete and delete tasks with local storage, built with HTML, CSS and JS.", s: ["HTML", "CSS", "JS"], status: "Next" },
+  { t: "Student Result Calculator", d: "Enter marks and get SGPA/percentage instantly in a clean UI.", s: ["JavaScript", "DOM"], status: "Next" },
+];
+
+const EDU = [
+  ["B.Tech Computer Science", "Bansal College of Engineering, Mandideep (RGPV) | 2025 – 2029", "1st Semester SGPA: 7.67"],
+  ["Class XII", "MP Board | 2025", "87.8%"],
+  ["Class X", "MP Board | 2023", "88.4%"],
+];
+
+const CERTS = ["NASA Nancy Grace Roman Space Telescope Certificate", "Financial Literacy (Govt. of India, 2023)", "Elementary English as a Second Language (Saylor Academy)", "Group Communication (Saylor Academy)", "Interviewing Skills (Saylor Academy)","NCC'A'certificate"];
+/* ========================================================== */
+
+function useReveal() {
+  useEffect(() => {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add("show");
+        e.target.querySelectorAll(".bar i").forEach(b => b.style.width = b.dataset.w + "%");
+      }
+    }), { threshold: 0.15 });
+    document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+}
+
+function Typing({ words }) {
+  const [i, setI] = useState(0), [txt, setTxt] = useState(""), [del, setDel] = useState(false);
+  useEffect(() => {
+    const w = words[i];
+    const t = setTimeout(() => {
+      if (!del) { setTxt(w.slice(0, txt.length + 1)); if (txt === w) setTimeout(() => setDel(true), 900); }
+      else { setTxt(w.slice(0, txt.length - 1)); if (txt === "") { setDel(false); setI((i + 1) % words.length); } }
+    }, del ? 40 : 90);
+    return () => clearTimeout(t);
+  }, [txt, del, i]);
+  return <span className="grad">{txt}<span className="cursor"></span></span>;
+}
+
+function Nav() {
+  const [dark, setDark] = useState(true);
+  const toggle = () => { const n = !dark; setDark(n); document.documentElement.dataset.theme = n ? "dark" : "light"; };
+  return (
+    <nav>
+      <div className="logo grad">Anju.dev</div>
+      <ul>
+        {["about", "skills", "education", "projects", "contact"].map(s => <li key={s}><a href={"#" + s}>{s[0].toUpperCase() + s.slice(1)}</a></li>)}
+        <li><button className="tog" onClick={toggle}>{dark ? "☀️" : "🌙"}</button></li>
+      </ul>
+    </nav>
+  );
+}
+
+function Hero() {
+  return (
+    <section className="hero" id="home">
+      <div>
+        <p className="muted">Hello, I’m</p>
+        <h1>{INFO.name}</h1>
+        <div className="role"><Typing words={INFO.roles} /></div>
+        <p>{INFO.tagline}</p>
+        <div className="btns">
+          <a className="btn main" href="#projects">View Projects</a>
+          <a className="btn" href="#contact">Contact Me</a>
+        </div>
+      </div>
+      <div className="avatar">
+        
+        {PHOTO ? <img src={PHOTO} alt={INFO.name} /> : <div className="grad">A</div>}
+      </div>
+    </section>
+  );
+}
+
+function About() {
+  return (
+    <section id="about" className="reveal">
+      <h2>About <span>Me</span></h2>
+      <div className="card">
+        <p>I’m a B.Tech Computer Science student at Bansal College of Engineering who loves problem solving and building things with code. I’m now working towards becoming a software engineer by learning C++, web development and data structures step by step.</p>
+        <div className="stats">
+          <div><b className="grad">7.67</b><span className="muted">SGPA (Sem 1)</span></div>
+          <div><b className="grad">87.8%</b><span className="muted">Class XII</span></div>
+          <div><b className="grad">5+</b><span className="muted">Certificates</span></div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Skills() {
+  return (
+    <section id="skills" className="reveal">
+      <h2>My <span>Skills</span></h2>
+      <div className="card">
+        {SKILLS.map(([n, v]) => (
+          <div key={n}>
+            <div className="row"><span>{n}</span><span>{v}%</span></div>
+            <div className="bar"><i data-w={v}></i></div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Education() {
+  return (
+    <section id="education" className="reveal">
+      <h2>Education & <span>Certificates</span></h2>
+      <div className="grid">
+        {EDU.map(([a, b, c]) => <div className="card" key={a}><h3>{a}</h3><p>{b}</p><span className="tag">{c}</span></div>)}
+      </div>
+      <div className="card" style={{ marginTop: 20 }}>
+        <h3>🏅 Certifications</h3>
+        <ul style={{ margin: "10px 0 0 20px" }} className="muted">{CERTS.map(c => <li key={c}>{c}</li>)}</ul>
+      </div>
+    </section>
+  );
+}
+
+function Projects() {
+  return (
+    <section id="projects" className="reveal">
+      <h2>My <span>Projects</span></h2>
+      <div className="grid">
+        {PROJECTS.map(p => (
+          <div className="card" key={p.t}>
+            <h3>{p.t}</h3><p>{p.d}</p>
+            <div>{p.s.map(x => <span className="tag" key={x}>{x}</span>)}</div>
+            <p style={{ marginTop: 12 }}>Status: <b className="grad">{p.status}</b></p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Contact() {
+  return (
+    <section id="contact" className="reveal">
+      <h2>Get In <span>Touch</span></h2>
+      <div className="card" style={{ textAlign: "center" }}>
+        <p>Open to internships, collaborations and learning opportunities. Say hi!</p>
+        <div className="btns" style={{ justifyContent: "center" }}>
+          <a className="btn main" href={"mailto:" + INFO.email}>✉️ Email</a>
+          <a className="btn" href={INFO.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+          <a className="btn" href={INFO.github} target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function App() {
+  useReveal();
+  return (<><Nav /><Hero /><About /><Skills /><Education /><Projects /><Contact />
+    <footer>© 2026 {INFO.name}. Built with React, CSS & JavaScript 💜</footer></>);
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>
